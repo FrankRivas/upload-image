@@ -15,6 +15,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { SaveImage } from '../dtos/save-image.dto';
 import { GetImage } from '../dtos/get-image.dto';
 import { Student } from '../docs/student.response.doc';
+import { FileValidatorInterceptor } from '../interceptors/file.interceptor';
 
 @ApiTags('Upload Images')
 @Controller()
@@ -23,7 +24,7 @@ export class AppController {
 
   @Post('upload-image')
   @UseGuards(MultipartGuard)
-  @UseInterceptors(FileInterceptor('imageFile'))
+  @UseInterceptors(FileInterceptor('imageFile'), FileValidatorInterceptor)
   @ApiConsumes('multipart/form-data')
   @ApiBody({ type: SaveImage })
   async uploadFile(

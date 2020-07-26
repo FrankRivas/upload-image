@@ -1,9 +1,12 @@
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app/app.module';
+import { AllExceptionsFilter } from './app/filters/all-exceptions.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.useGlobalFilters(new AllExceptionsFilter());
+
   const options = new DocumentBuilder()
     .setTitle('Upload Images')
     .setDescription('Upload Images API')
